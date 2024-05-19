@@ -76,19 +76,19 @@ Maven 3.1.1 trở lên
 
 ### Front-end
 
-### 1. Mở thư mục frontend
+#### 1. Mở thư mục frontend
 
 ```
 cd frontend
 ```
 
-### 2. Tải các dependencies
+#### 2. Tải các dependencies
 
 ```
 npm install
 ```
 
-### 3. Chạy chương trình
+#### 3. Chạy chương trình
 
 ```
 npm run dev
@@ -96,13 +96,13 @@ npm run dev
 
 ### Back-end
 
-### 1. Mở thư mục backend
+#### 1. Mở thư mục backend
 
 ```
 cd backend
 ```
 
-### 2. Tải maven dependencies
+#### 2. Tải maven dependencies
 
 ```
 mvn clean install

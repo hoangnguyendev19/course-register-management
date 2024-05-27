@@ -99,6 +99,7 @@ const ClassManagement = () => {
 
   const handleLock = async (id) => {
     const data = await ClassAPI.closeClass(id);
+    console.log(data);
     if (data) {
       const newClassList = classList.map((c) =>
         c.id === id ? renderClassData(data) : c

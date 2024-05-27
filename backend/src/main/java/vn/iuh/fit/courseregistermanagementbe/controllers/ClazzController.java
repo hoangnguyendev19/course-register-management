@@ -12,10 +12,7 @@ import vn.iuh.fit.courseregistermanagementbe.models.Clazz;
 import vn.iuh.fit.courseregistermanagementbe.models.Enrollment;
 import vn.iuh.fit.courseregistermanagementbe.models.ResponseObject;
 import vn.iuh.fit.courseregistermanagementbe.models.Student;
-import vn.iuh.fit.courseregistermanagementbe.services.IClazzService;
-import vn.iuh.fit.courseregistermanagementbe.services.ICourseService;
-import vn.iuh.fit.courseregistermanagementbe.services.ILecturerService;
-import vn.iuh.fit.courseregistermanagementbe.services.ISemesterService;
+import vn.iuh.fit.courseregistermanagementbe.services.*;
 import vn.iuh.fit.courseregistermanagementbe.utils.Handler;
 
 import java.time.LocalDate;
@@ -38,6 +35,9 @@ public class ClazzController {
 
     @Autowired
     private ILecturerService lecturerService;
+
+    @Autowired
+    private IStudentService studentService;
 
     @Autowired
     private JavaMailSender mailSender;
@@ -145,8 +145,8 @@ public class ClazzController {
             clazz.setStatus(EStatus.CLOSE);
 
             if (clazzService.save(clazz)) {
-                List<Student> students = clazz.getEnrollments().stream().map(Enrollment::getStudent).toList();
-                System.out.println(students);
+                List<String> studentIds = clazz.getEnrollments().stream().map(en -> en.getStudent().getId()).toList();
+                List<Student> students = studentIds.stream().map(studentService::findById).toList();
                 for(Student student : students) {
                     // send email
                     SimpleMailMessage mailMessage = new SimpleMailMessage();
@@ -200,8 +200,8 @@ public class ClazzController {
     public ResponseEntity<ResponseObject> delete(@PathVariable String id) {
         try {
             Clazz clazz = clazzService.findById(id);
-            List<Student> students = clazz.getEnrollments().stream().map(Enrollment::getStudent).toList();
-            System.out.println(students);
+            List<String> studentIds = clazz.getEnrollments().stream().map(en -> en.getStudent().getId()).toList();
+            List<Student> students = studentIds.stream().map(studentService::findById).toList();
             for(Student student : students) {
                 // send email
                 SimpleMailMessage mailMessage = new SimpleMailMessage();

@@ -108,7 +108,7 @@ const CourseRegister = () => {
 
     const data = await EnrollmentAPI.enroll(enrollment);
     if (data.status === "success") {
-      const newData = [...enrollmentList, renderEnrollmentData(data)];
+      const newData = [...enrollmentList, renderEnrollmentData(data.data)];
       setEnrollmentList(newData);
       toast.success("Đăng ký học phần thành công");
     } else {

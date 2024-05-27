@@ -79,8 +79,11 @@ public class CourseController {
 
             course.setName(map.get("name").toString());
             course.setDescription(map.get("description").toString());
-            course.setCredit((int) map.get("credit"));
-            course.setPrerequisite(map.get("prerequisite").toString());
+            course.setCredit(Integer.parseInt(map.get("credit").toString()));
+            if(map.get("prerequisite") != null) {
+                course.setPrerequisite(map.get("prerequisite").toString());
+            }
+
             if (courseService.save(course)) {
                 CourseDTO courseDTO = Handler.convertCourseToCourseDTO(course);
                 return ResponseEntity.status(HttpStatus.OK).body(

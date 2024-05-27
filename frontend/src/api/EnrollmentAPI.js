@@ -24,7 +24,8 @@ const getAllEnrollments = async (student) => {
 const enroll = async (enrollment) => {
   try {
     const { data } = await axiosInstance.post("/enrollments", enrollment);
-    return data.data;
+
+    return data;
   } catch (error) {
     console.error(error);
     if (error.response.status === 400) {
